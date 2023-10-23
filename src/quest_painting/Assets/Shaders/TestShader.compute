@@ -1,5 +1,5 @@
 // Each #kernel tells which function to compile; you can have many kernels
-#pragma kernel CSMain
+#pragma kernel PaintTexture
 
 // Create a RenderTexture with enableRandomWrite flag (RW) and set it
 // with cs.SetTexture
@@ -9,7 +9,7 @@ RWTexture2D<float4> Result;
 float Resolution;
 
 [numthreads(8,8,1)]
-void CSMain(uint3 id : SV_DispatchThreadID) // SV_DispatchThreadID is a semantic meaning that it will return the exact thread id 
+void PaintTexture(uint3 id : SV_DispatchThreadID) // SV_DispatchThreadID is a semantic meaning that it will return the exact thread id 
 {
     // TODO: insert actual code here!
 

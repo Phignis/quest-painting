@@ -16,7 +16,7 @@ public class ShaderInvoker : MonoBehaviour
 
         renderedTexture.Create();
 
-        int kernelIndex = shader.FindKernel("CSMain");
+        int kernelIndex = shader.FindKernel("PaintTexture");
 
         shader.SetTexture(kernelIndex, "Result", renderedTexture);
         shader.SetFloat("Resolution", renderedTexture.width);
