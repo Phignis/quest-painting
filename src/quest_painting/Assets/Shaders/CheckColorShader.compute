@@ -1,0 +1,15 @@
+#pragma kernel CheckColor
+
+RWTexture2D<float4> TextureToCheck; // texture on which shader will operate
+
+
+float4 ValidColor; // color in which the pixels should be in
+
+RWStructuredBuffer<int> NbValidPixels;
+
+[numthreads(8,8,1)]
+void CheckColor(uint3 id : SV_DispatchThreadID) // SV_DispatchThreadID is a semantic meaning that it will return the exact thread id 
+{
+    if(TextureToCheck[id.xy] == ValidColor)
+        ++NbValidPixels[0];
+}
