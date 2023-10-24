@@ -137,7 +137,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: fec01f486c90b9a4c8b02f084c6cc6e6, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: fec01f486c90b9a4c8b02f084c6cc6e6, type: 3}
       propertyPath: m_LocalPosition.y
@@ -178,7 +178,7 @@ PrefabInstance:
     - target: {fileID: -7511558181221131132, guid: fec01f486c90b9a4c8b02f084c6cc6e6, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 2100000, guid: ab32c067ac272084f9d5fca20d4526d8, type: 2}
+      objectReference: {fileID: 2100000, guid: bb1192ff665d71b409c653d53edf152d, type: 2}
     - target: {fileID: 919132149155446097, guid: fec01f486c90b9a4c8b02f084c6cc6e6, type: 3}
       propertyPath: m_Name
       value: desk

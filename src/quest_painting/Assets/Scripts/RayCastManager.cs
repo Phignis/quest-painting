@@ -14,11 +14,11 @@ public class RayCastManager : MonoBehaviour
         if (Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out rayHit, 20.0f))
         {
             Renderer rend = rayHit.transform.GetComponent<Renderer>();
-            Debug.Log(rayHit.textureCoord);
             Texture toPaint = rend.material.mainTexture;
             try
             {
-                rend.material.mainTexture = ShaderUtility.PaintTextureOf(toPaint, shaderToApply, rayHit.textureCoord);
+                rend.material.mainTexture = ShaderUtility
+                        .PaintTextureOf(toPaint, shaderToApply, rayHit.textureCoord, new Vector2Int(4, 6), new Color(255, 0, 0));
             }
             catch (ArgumentException e)
             {

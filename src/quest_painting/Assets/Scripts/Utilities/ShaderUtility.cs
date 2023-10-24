@@ -46,20 +46,31 @@ public class ShaderUtility : MonoBehaviour
     /// <exception cref="ArgumentException">
     /// if no kernel called PaintTexture where found in shaderForPaiting
     /// </exception>
-    public static RenderTexture PaintTextureOf(Texture initialTexture, ComputeShader shaderForPaiting, Vector2 contactPointOnUvMap)
+    public static RenderTexture PaintTextureOf(Texture initialTexture, ComputeShader shaderForPaiting, Vector2 contactPointOnUvMap, Vector2Int scaleOfSpray, Color colorToApply)
     {
-        ShaderToApply = shaderForPaiting; // check if there is a shader to apply
-        RenderTexture renderedTexture = new RenderTexture(initialTexture.width, initialTexture.height, 24);
+        ShaderToApply = shaderForPaiting; // check if there is a valid name in kernels, and set it to update ShaderId
+
+        // create a RenderTexture with resolution of the given texture
+        RenderTexture renderedTexture = new RenderTexture(initialTexture.width, initialTexture.height, 24); 
         renderedTexture.enableRandomWrite = true;
-
-        Graphics.Blit(initialTexture, renderedTexture);
-        
-
+        Graphics.Blit(initialTexture, renderedTexture); // copy into the renderTexture the pixel of initialTexture
         renderedTexture.Create();
 
-        _shaderToApply.SetTexture(ShaderId, "Result", renderedTexture);
-        _shaderToApply.SetFloat("Resolution", renderedTexture.width);
-        _shaderToApply.Dispatch(ShaderId, renderedTexture.width / 8, renderedTexture.height / 8, 1);
+        // contactPointOnUvMap get coord on UvMap (from range from [0, 0] to [1, 1]. Multiply by resolution to get the pixel coords in texture
+        int[] coords = { (int)(contactPointOnUvMap.x * initialTexture.width),
+                            (int)(contactPointOnUvMap.y * initialTexture.height)};
+
+        uint nbThreadX, nbThreadY, nbThreadZ;
+        _shaderToApply.GetKernelThreadGroupSizes(ShaderId, out nbThreadX, out nbThreadY, out nbThreadZ);
+
+        // determine the number of pixels which will be changed in each direction, to give it to shader, to center the application
+        int[] nbPixelsToChange = { (int)nbThreadX * scaleOfSpray.x, (int)nbThreadY * scaleOfSpray.y };
+
+        _shaderToApply.SetTexture(ShaderId, "TextureToTransform", renderedTexture);
+        _shaderToApply.SetVector("ColorToPaint", colorToApply);
+        _shaderToApply.SetInts("PixelCoordApplyPoint", coords);
+        _shaderToApply.SetInts("NumberPixelToChange", nbPixelsToChange);
+        _shaderToApply.Dispatch(ShaderId, scaleOfSpray.x, scaleOfSpray.y, 1);
 
         return renderedTexture;
     }
