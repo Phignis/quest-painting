@@ -190,6 +190,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: fec01f486c90b9a4c8b02f084c6cc6e6, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1330244205}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: fec01f486c90b9a4c8b02f084c6cc6e6, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1330244209}
   m_SourcePrefab: {fileID: 100100000, guid: fec01f486c90b9a4c8b02f084c6cc6e6, type: 3}
 --- !u!1 &837607459
 GameObject:
@@ -324,6 +327,21 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 7826061776304537819, guid: fec01f486c90b9a4c8b02f084c6cc6e6, type: 3}
+--- !u!114 &1330244209
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1330244197}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 15130b229e34fd340917ba9f2f86eb49, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  checkerShader: {fileID: 7200000, guid: 0baac2fbc9fb08a4fb09d143633f10c4, type: 3}
+  paintingColor: {r: 1, g: 0, b: 0, a: 1}
+  validColorOffset: 1
 --- !u!1 &1912590643
 GameObject:
   m_ObjectHideFlags: 0
