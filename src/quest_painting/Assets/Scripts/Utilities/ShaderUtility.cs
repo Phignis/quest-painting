@@ -51,8 +51,9 @@ public class ShaderUtility : MonoBehaviour
         ShaderToApply = shaderForPaiting; // check if there is a valid name in kernels, and set it to update ShaderId
 
         // create a RenderTexture with resolution of the given texture
-        RenderTexture renderedTexture = new RenderTexture(initialTexture.width, initialTexture.height, 24); 
+        var renderedTexture = new RenderTexture(initialTexture.width, initialTexture.height, 24); 
         renderedTexture.enableRandomWrite = true;
+
         Graphics.Blit(initialTexture, renderedTexture); // copy into the renderTexture the pixel of initialTexture
         renderedTexture.Create();
 

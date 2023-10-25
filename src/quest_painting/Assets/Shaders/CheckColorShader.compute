@@ -4,7 +4,7 @@ Texture2D<float4> TextureToCheck; // texture on which shader will operate, only 
 
 float4 ValidColor; // color in which the pixels should be in
 
-int AcceptableOffset; // offset acceptable for each x, y, z to consider color as valid
+float AcceptableOffsetPercent; // offset acceptable for each x, y, z to consider color as valid
 
 RWStructuredBuffer<uint> NbValidPixels;
 
@@ -13,6 +13,9 @@ void CheckColor(uint3 id : SV_DispatchThreadID) // SV_DispatchThreadID is a sema
 {
     float4 pixelColor = TextureToCheck[id.xy];
     // TODO: search for a way to improve the check of color
-    if (pixelColor.r == ValidColor.x)
-        InterlockedAdd(NbValidPixels[0], 1); // ++NbValidPixels[0] is not atomic in shader programmation, resulting in datarace. InterlockAdd avoid 
+    if (pixelColor.r >= ValidColor.r - AcceptableOffsetPercent && pixelColor.r <= ValidColor.r + AcceptableOffsetPercent
+        && pixelColor.g >= ValidColor.g - AcceptableOffsetPercent && pixelColor.g <= ValidColor.g + AcceptableOffsetPercent
+        && pixelColor.b >= ValidColor.b - AcceptableOffsetPercent && pixelColor.b <= ValidColor.b + AcceptableOffsetPercent)
+        InterlockedAdd(NbValidPixels[0], 1);
+    // ++NbValidPixels[0] is not atomic in programmation, resulting in datarace. InterlockAdd create a critical section on the increment
 }
