@@ -15,8 +15,6 @@ uint2 NumberPixelToChange; // represent how many pixel will be set on x and y, t
 [numthreads(8,8,1)]
 void PaintTexture(uint3 id : SV_DispatchThreadID) // SV_DispatchThreadID is a semantic meaning that it will return the exact thread id 
 {
-    uint width, height;
-    TextureToTransform.GetDimensions(width, height);
     uint2 pixelToChangeColor = PixelCoordApplyPoint;
     pixelToChangeColor.x += id.x - (NumberPixelToChange.x / 2);
     pixelToChangeColor.y += id.y - (NumberPixelToChange.y / 2);

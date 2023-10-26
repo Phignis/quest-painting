@@ -24,17 +24,21 @@ public class RayCastManager : MonoBehaviour
         if (Physics.Raycast(gameObject.transform.position, gameObject.transform.forward, out rayHit, distanceOfRay))
         {
             var hittedRenderer = rayHit.transform.GetComponent<Renderer>();
-            Texture toPaint = hittedRenderer.material.mainTexture;
-            try
+            if(hittedRenderer != null )
             {
-                hittedRenderer.material.mainTexture = ShaderUtility
+                Texture toPaint = hittedRenderer.material.mainTexture;
+                try {                
+                    hittedRenderer.material.mainTexture = ShaderUtility
                         .PaintTextureOf(toPaint, shaderToApply, rayHit.textureCoord, paintingFormat, colorToApply);
+                }
+                catch (Exception e) when (e is ArgumentException || e is NullReferenceException)
+                {
+                    if (toPaint is null)
+                        Debug.LogError("Non Fatal : texture is null, being changed by another call to PaintTextureOf");
+                    else
+                        Debug.LogError(e.Message); // not excepted error
+                }
             }
-            catch (ArgumentException e)
-            {
-                Debug.LogError(e.Message);
-            }
-
         }
     }
 }
