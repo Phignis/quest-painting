@@ -42,6 +42,7 @@ public class PaintedSubject : Subject
         if(!_isFullyPainted)
         {
             var kernelId = checkerShader.FindKernel("CheckColor"); // throw exception if not founded
+
             if (validColorOffset < 0 || validColorOffset > 255)
                 throw new ArgumentException("color offset should always be between 0 and 255");
             if (percentNeededForFullPaint < 0f || percentNeededForFullPaint > 1f)
@@ -60,7 +61,8 @@ public class PaintedSubject : Subject
             checkerShader.SetBuffer(kernelId, "NbValidPixels", computeBuffer);
             #endregion
 
-            checkerShader.Dispatch(kernelId, texture.width / 8, texture.height / 8, 1);
+            checkerShader.GetKernelThreadGroupSizes(kernelId, out uint nbThreadX, out uint nbThreadY, out _);
+            checkerShader.Dispatch(kernelId, texture.width / (int)nbThreadX, texture.height / (int)nbThreadY, 1);
 
             computeBuffer.GetData(nbPixelsValid);
             computeBuffer.Dispose();

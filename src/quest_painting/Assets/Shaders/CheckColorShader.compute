@@ -1,15 +1,15 @@
 #pragma kernel CheckColor
 
-Texture2D<float4> TextureToCheck; // texture on which shader will operate, only readable
+Texture2D<float4> TextureToCheck; // texture on which shader will operate, only readable (only check pixel color)
 
 float4 ValidColor; // color in which the pixels should be in
 
 float AcceptableOffsetPercent; // offset acceptable for each x, y, z to consider color as valid
 
-RWStructuredBuffer<uint> NbValidPixels;
+RWStructuredBuffer<uint> NbValidPixels; // buffer to communicate number of valid pixel to c# calling script
 
 [numthreads(8,8,1)]
-void CheckColor(uint3 id : SV_DispatchThreadID) // SV_DispatchThreadID is a semantic meaning that it will return the exact thread id 
+void CheckColor(uint3 id : SV_DispatchThreadID)
 {
     float4 pixelColor = TextureToCheck[id.xy];
     // TODO: search for a way to improve the check of color
