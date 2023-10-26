@@ -1,4 +1,4 @@
-# Shader Principle in Unity
+# Painting Method explanation
 
 This text will clarify how the painting method is implemented.
 
@@ -37,4 +37,11 @@ This text will clarify how the painting method is implemented.
 > If we consider as valid only the precise RGB code, it will be too hard to detect some pixels that are not of the exact
 > same color. To avoid this, a tolerance on the color have to be implemented.
 > When retreiving the valid-pixel counter on CPU side, we will compare it with the total number of pixels in texture.
-> If a certain pourcentage is reached, it will be valided.
+> If a certain percentage is reached, it will be valided.
+
+## How to notify scene that object is fully painted
+> Once object is totally painted, we need to continue the game.<br />
+> For this reason, we either need to make a possible game manager checking for the paint, or let it to the painted object
+> itself, which will have the charge to notify all interested game object.<br />
+> This solution, called Observer, have benefits to be scalable. Even if we don't know right now how many GameObject in
+> scene need to change upon object fully-painted event, we can just make them subscribe to the subject.

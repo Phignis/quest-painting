@@ -51,25 +51,28 @@ public class ShaderUtility : MonoBehaviour
         ShaderToApply = shaderForPaiting; // check if there is a valid name in kernels, and set it to update ShaderId
 
         // create a RenderTexture with resolution of the given texture
-        RenderTexture renderedTexture = new RenderTexture(initialTexture.width, initialTexture.height, 24); 
+        var renderedTexture = new RenderTexture(initialTexture.width, initialTexture.height, 24); 
         renderedTexture.enableRandomWrite = true;
+
         Graphics.Blit(initialTexture, renderedTexture); // copy into the renderTexture the pixel of initialTexture
         renderedTexture.Create();
 
         // contactPointOnUvMap get coord on UvMap (from range from [0, 0] to [1, 1]. Multiply by resolution to get the pixel coords in texture
         int[] coords = { (int)(contactPointOnUvMap.x * initialTexture.width),
                             (int)(contactPointOnUvMap.y * initialTexture.height)};
-
-        uint nbThreadX, nbThreadY, nbThreadZ;
-        _shaderToApply.GetKernelThreadGroupSizes(ShaderId, out nbThreadX, out nbThreadY, out nbThreadZ);
+        _shaderToApply.GetKernelThreadGroupSizes(ShaderId, out uint nbThreadX, out uint nbThreadY, out _);
 
         // determine the number of pixels which will be changed in each direction, to give it to shader, to center the application
         int[] nbPixelsToChange = { (int)nbThreadX * scaleOfSpray.x, (int)nbThreadY * scaleOfSpray.y };
 
+        #region Set Shader variables
         _shaderToApply.SetTexture(ShaderId, "TextureToTransform", renderedTexture);
         _shaderToApply.SetVector("ColorToPaint", colorToApply);
         _shaderToApply.SetInts("PixelCoordApplyPoint", coords);
         _shaderToApply.SetInts("NumberPixelToChange", nbPixelsToChange);
+        #endregion
+
+
         _shaderToApply.Dispatch(ShaderId, scaleOfSpray.x, scaleOfSpray.y, 1);
 
         return renderedTexture;

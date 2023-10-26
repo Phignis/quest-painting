@@ -1,17 +1,16 @@
-// kernel is the function to reference with id, to compile and execute it
+// kernel is the function to reference with id, in order to compile and execute it
 #pragma kernel PaintTexture
 
-// Create a RenderTexture with enableRandomWrite flag (RW) and set it
-// with cs.SetTexture
-RWTexture2D<float4> TextureToTransform; // texture on which shader will operate
+// set it with cs.SetTexture
+RWTexture2D<float4> TextureToTransform; // texture on which shader will operate, RandomWrite is enable to modify it
 
 // set it with cs.SetVector
-float4 ColorToPaint; // color in which the pixels will be set
+float4 ColorToPaint; // color the pixels will be set to
 
 // set it with cs.SetInts
 uint2 PixelCoordApplyPoint; // origin from where we apply offset to determine the pixel to modify
 
-uint2 NumberPixelToChange; // give away the information of how many pixel will be set on x and y, to apply negative offset
+uint2 NumberPixelToChange; // represent how many pixel will be set on x and y, to apply negative offset, and center the painting on origin
 
 [numthreads(8,8,1)]
 void PaintTexture(uint3 id : SV_DispatchThreadID) // SV_DispatchThreadID is a semantic meaning that it will return the exact thread id 
