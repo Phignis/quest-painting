@@ -27,26 +27,33 @@ public class RayCastManager : MonoBehaviour
     /// </summary>
     public byte paintingLayer;
 
+    /// <summary>
+    /// represent the fade percent for transition. 1.0f is maximum, and will not paint at all.
+    /// </summary>
+    public float paintFade;
+
     // Update is called once per frame
     void Update()
     {
         if (distanceOfRay < 0)
             throw new ArgumentException("max distance of raycast should be positive");
-        if(paintingLayer > 31) {
+        if (paintingLayer > 31)
             throw new ArgumentException("unity layers are between 0 and 31 included");
-        }
+        if(paintFade < 0f || paintFade > 1f)
+            throw new ArgumentException("fading paint should be between 0 and 1 included : " + paintFade);
 
         Debug.DrawRay(gameObject.transform.position, gameObject.transform.forward * distanceOfRay, new Color(255, 0, 0), 1.0f);
 
         if (Physics.Raycast(gameObject.transform.position, gameObject.transform.forward, out rayHit, distanceOfRay, 1 << paintingLayer))
         {
             var hittedRenderer = rayHit.transform.GetComponent<Renderer>();
-            if(hittedRenderer != null)
+            if (hittedRenderer != null)
             {
                 Texture toPaint = hittedRenderer.material.mainTexture;
-                try {                
+                try
+                {
                     hittedRenderer.material.mainTexture = ShaderUtility
-                        .PaintTextureOf(toPaint, shaderToApply, rayHit.textureCoord, paintingFormat, colorToApply);
+                        .PaintTextureOf(toPaint, shaderToApply, rayHit.textureCoord, paintingFormat, paintFade, colorToApply);
                 }
                 catch (Exception e) when (e is ArgumentException || e is NullReferenceException)
                 {

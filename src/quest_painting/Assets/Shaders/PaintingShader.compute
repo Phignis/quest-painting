@@ -12,12 +12,26 @@ uint2 PixelCoordApplyPoint; // origin from where we apply offset to determine th
 
 uint2 NumberPixelToChange; // represent how many pixel will be set on x and y, to apply negative offset, and center the painting on origin
 
+float FadingPaint; // represent a bias for the fading, from 0 to 1, 1 will not paint at all
+
 [numthreads(8,8,1)]
 void PaintTexture(uint3 id : SV_DispatchThreadID) // SV_DispatchThreadID is a semantic meaning that it will return the exact thread id 
 {
     uint2 pixelToChangeColor = PixelCoordApplyPoint;
-    pixelToChangeColor.x += id.x - (NumberPixelToChange.x / 2);
-    pixelToChangeColor.y += id.y - (NumberPixelToChange.y / 2);
+    float2 pixelOffset = { id.x - (NumberPixelToChange.x / 2.0f), id.y - (float) (NumberPixelToChange.y / 2.0f) };
+    pixelToChangeColor.x += pixelOffset.x;
+    pixelToChangeColor.y += pixelOffset.y;
     
-    TextureToTransform[pixelToChangeColor] = ColorToPaint;
+    uint maxOffset = (NumberPixelToChange.x / 2) + (NumberPixelToChange.y / 2);
+    float offsetPercent = (abs(pixelOffset.x) + abs(pixelOffset.y)) / maxOffset;
+    
+    float initialCoeff = offsetPercent + FadingPaint;
+    if (initialCoeff > 1.0f)
+        initialCoeff = 1.0f;
+    float toPaintCoeff = 1 - offsetPercent - FadingPaint;
+    if (toPaintCoeff < 0.0f)
+        toPaintCoeff = 0.0f;
+    
+    float4 finalColorApplied = initialCoeff * TextureToTransform[pixelToChangeColor] + toPaintCoeff * ColorToPaint;
+    TextureToTransform[pixelToChangeColor] = finalColorApplied;
 }

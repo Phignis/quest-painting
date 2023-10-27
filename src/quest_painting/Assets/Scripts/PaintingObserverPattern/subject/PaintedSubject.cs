@@ -76,7 +76,7 @@ public class PaintedSubject : Subject
                 Debug.Log("painted!");
             } else
             {
-                Debug.Log("not fully painted: there is " + nbPixelsValid[0] + " valid pixels. Need " + nbPixelToBeValid);
+                Debug.Log("not fully painted: at " + nbPixelsValid[0] / (float)nbPixelToBeValid + "% ");
             }
         }
     }

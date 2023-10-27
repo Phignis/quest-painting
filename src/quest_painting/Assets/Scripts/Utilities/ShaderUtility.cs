@@ -48,7 +48,8 @@ public class ShaderUtility : MonoBehaviour
     /// <exception cref="ArgumentException">
     /// if no kernel called PaintTexture where found in shaderForPaiting
     /// </exception>
-    public static RenderTexture PaintTextureOf(Texture initialTexture, ComputeShader shaderForPaiting, Vector2 contactPointOnUvMap, Vector2Int scaleOfSpray, Color colorToApply)
+    public static RenderTexture PaintTextureOf(Texture initialTexture, ComputeShader shaderForPaiting, Vector2 contactPointOnUvMap,
+                                                    Vector2Int scaleOfSpray, float paintFade, Color colorToApply)
     {
         ShaderToApply = shaderForPaiting; // check if there is a valid name in kernels, and set it to update ShaderId
 
@@ -75,6 +76,7 @@ public class ShaderUtility : MonoBehaviour
         _shaderToApply.SetVector("ColorToPaint", colorToApply);
         _shaderToApply.SetInts("PixelCoordApplyPoint", coords);
         _shaderToApply.SetInts("NumberPixelToChange", nbPixelsToChange);
+        _shaderToApply.SetFloat("FadingPaint", paintFade);
         #endregion
 
 
