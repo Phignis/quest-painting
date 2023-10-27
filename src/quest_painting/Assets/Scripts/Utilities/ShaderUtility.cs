@@ -1,6 +1,4 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class ShaderUtility : MonoBehaviour
@@ -82,6 +80,7 @@ public class ShaderUtility : MonoBehaviour
 
         _shaderToApply.Dispatch(ShaderId, scaleOfSpray.x, scaleOfSpray.y, 1);
 
+        Debug.Log("texture modified");
         return _renderedTexture;
     }
 }

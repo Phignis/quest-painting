@@ -32,7 +32,7 @@ public class RayCastManager : MonoBehaviour
     /// </summary>
     public float paintFade;
 
-    // Update is called once per frame
+
     void Update()
     {
         if (distanceOfRay < 0)
@@ -42,9 +42,9 @@ public class RayCastManager : MonoBehaviour
         if(paintFade < 0f || paintFade > 1f)
             throw new ArgumentException("fading paint should be between 0 and 1 included : " + paintFade);
 
-        Debug.DrawRay(gameObject.transform.position, gameObject.transform.forward * distanceOfRay, new Color(255, 0, 0), 1.0f);
+        Debug.DrawRay(gameObject.transform.position, gameObject.transform.up * distanceOfRay, new Color(255, 0, 0), 1.0f);
 
-        if (Physics.Raycast(gameObject.transform.position, gameObject.transform.forward, out rayHit, distanceOfRay, 1 << paintingLayer))
+        if (Physics.Raycast(gameObject.transform.position, gameObject.transform.up, out rayHit, distanceOfRay, 1 << paintingLayer))
         {
             var hittedRenderer = rayHit.transform.GetComponent<Renderer>();
             if (hittedRenderer != null)

@@ -4,7 +4,13 @@
 EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
-  m_Scenes: []
+  m_Scenes:
+  - enabled: 1
+    path: Assets/Scenes/RickMortyGarage.unity
+    guid: bb9854d762646ac4a8ea88b9528f4888
+  - enabled: 0
+    path: Assets/Scenes/TestPaintVr.unity
+    guid: ceb3809dc21554c48854dd3a55d2cb03
   m_configObjects:
     com.unity.xr.management.loader_settings: {fileID: 11400000, guid: 6195e811730ef064ca5758e571271ff0, type: 2}
     com.unity.xr.openxr.settings4: {fileID: 11400000, guid: ccac05ada11b24541a11b43fbaccc088, type: 2}

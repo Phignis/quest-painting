@@ -1,10 +1,5 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Runtime.ConstrainedExecution;
-using UnityEditor.PackageManager.Requests;
 using UnityEngine;
-using UnityEngine.Rendering;
 
 /// <summary>
 /// PaintedSubject is the Subject of the

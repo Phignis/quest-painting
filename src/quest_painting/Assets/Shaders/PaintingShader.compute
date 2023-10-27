@@ -33,5 +33,5 @@ void PaintTexture(uint3 id : SV_DispatchThreadID) // SV_DispatchThreadID is a se
         toPaintCoeff = 0.0f;
     
     float4 finalColorApplied = initialCoeff * TextureToTransform[pixelToChangeColor] + toPaintCoeff * ColorToPaint;
-    TextureToTransform[pixelToChangeColor] = finalColorApplied;
+    TextureToTransform[pixelToChangeColor] = ColorToPaint;
 }
