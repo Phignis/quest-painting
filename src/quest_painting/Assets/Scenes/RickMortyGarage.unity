@@ -233,12 +233,16 @@ PrefabInstance:
       value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 4134505312059479865, guid: 895f6f3c2d334633b5800312285058d2, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 1.3
+      objectReference: {fileID: 0}
+    - target: {fileID: 4134505312059479865, guid: 895f6f3c2d334633b5800312285058d2, type: 3}
       propertyPath: m_LocalPosition.x
       value: -1.13
       objectReference: {fileID: 0}
     - target: {fileID: 4134505312059479865, guid: 895f6f3c2d334633b5800312285058d2, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 1
+      value: 1.184
       objectReference: {fileID: 0}
     - target: {fileID: 4134505312059479865, guid: 895f6f3c2d334633b5800312285058d2, type: 3}
       propertyPath: m_LocalPosition.z
@@ -417,9 +421,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   shaderToApply: {fileID: 7200000, guid: f6b6d0173859e34459cd78ea3dffffea, type: 3}
   colorToApply: {r: 1, g: 0, b: 0, a: 0}
-  paintingFormat: {x: 4, y: 6}
+  paintingFormat: {x: 10, y: 6}
   distanceOfRay: 5
   paintingLayer: 8
+  paintFade: 0
 --- !u!114 &835305664
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -660,14 +665,14 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 835305662}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1.66, y: 1.301, z: 8.09}
+  m_LocalRotation: {x: -0, y: -0.7271709, z: -0, w: 0.6864565}
+  m_LocalPosition: {x: -2.68, y: 0.426, z: 5.547}
   m_LocalScale: {x: 0.2, y: 0.2, z: 0.4}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 3
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: -93.299, z: 0}
 --- !u!1001 &1108602487
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -676,6 +681,26 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1168434105433231848, guid: 1450dc885a5ee3c4b8b790f876da9ae1, type: 3}
+      propertyPath: paintingColor.b
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1168434105433231848, guid: 1450dc885a5ee3c4b8b790f876da9ae1, type: 3}
+      propertyPath: paintingColor.g
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1168434105433231848, guid: 1450dc885a5ee3c4b8b790f876da9ae1, type: 3}
+      propertyPath: paintingColor.r
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1168434105433231848, guid: 1450dc885a5ee3c4b8b790f876da9ae1, type: 3}
+      propertyPath: validColorOffset
+      value: 32
+      objectReference: {fileID: 0}
+    - target: {fileID: 1168434105433231848, guid: 1450dc885a5ee3c4b8b790f876da9ae1, type: 3}
+      propertyPath: percentNeededForFullPaint
+      value: 0.8
+      objectReference: {fileID: 0}
     - target: {fileID: 2398623245620014696, guid: 1450dc885a5ee3c4b8b790f876da9ae1, type: 3}
       propertyPath: m_RootOrder
       value: 0
