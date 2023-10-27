@@ -41,7 +41,7 @@ public class RayCastManager : MonoBehaviour
         if (Physics.Raycast(gameObject.transform.position, gameObject.transform.forward, out rayHit, distanceOfRay, 1 << paintingLayer))
         {
             var hittedRenderer = rayHit.transform.GetComponent<Renderer>();
-            if(hittedRenderer != null )
+            if(hittedRenderer != null)
             {
                 Texture toPaint = hittedRenderer.material.mainTexture;
                 try {                
