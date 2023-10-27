@@ -27,6 +27,8 @@ public class ShaderUtility : MonoBehaviour
     }
     private static ComputeShader _shaderToApply;
 
+    private static RenderTexture _renderedTexture = null;
+
     /// <summary>
     /// Give back the ID of kernel named PaintTexture from the last shader used in last call of PaintTextureOf,
     /// or of last set of ShaderToApply
@@ -51,11 +53,14 @@ public class ShaderUtility : MonoBehaviour
         ShaderToApply = shaderForPaiting; // check if there is a valid name in kernels, and set it to update ShaderId
 
         // create a RenderTexture with resolution of the given texture
-        var renderedTexture = new RenderTexture(initialTexture.width, initialTexture.height, 24); 
-        renderedTexture.enableRandomWrite = true;
+        if(_renderedTexture is null || initialTexture.height != _renderedTexture.height || initialTexture.width != _renderedTexture.width)
+        {
+            _renderedTexture = new RenderTexture(initialTexture.width, initialTexture.height, 24);
+            _renderedTexture.enableRandomWrite = true;
+        }
 
-        Graphics.Blit(initialTexture, renderedTexture); // copy into the renderTexture the pixel of initialTexture
-        renderedTexture.Create();
+        Graphics.Blit(initialTexture, _renderedTexture); // copy into the renderTexture the pixel of initialTexture
+        //_renderedTexture.Create();
 
         // contactPointOnUvMap get coord on UvMap (from range from [0, 0] to [1, 1]. Multiply by resolution to get the pixel coords in texture
         int[] coords = { (int)(contactPointOnUvMap.x * initialTexture.width),
@@ -66,7 +71,7 @@ public class ShaderUtility : MonoBehaviour
         int[] nbPixelsToChange = { (int)nbThreadX * scaleOfSpray.x, (int)nbThreadY * scaleOfSpray.y };
 
         #region Set Shader variables
-        _shaderToApply.SetTexture(ShaderId, "TextureToTransform", renderedTexture);
+        _shaderToApply.SetTexture(ShaderId, "TextureToTransform", _renderedTexture);
         _shaderToApply.SetVector("ColorToPaint", colorToApply);
         _shaderToApply.SetInts("PixelCoordApplyPoint", coords);
         _shaderToApply.SetInts("NumberPixelToChange", nbPixelsToChange);
@@ -75,6 +80,6 @@ public class ShaderUtility : MonoBehaviour
 
         _shaderToApply.Dispatch(ShaderId, scaleOfSpray.x, scaleOfSpray.y, 1);
 
-        return renderedTexture;
+        return _renderedTexture;
     }
 }
